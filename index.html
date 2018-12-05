@@ -232,6 +232,143 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://jinghuihai.github.io/2018/12/05/交换两个-Integer/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘清露">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="韭菜鲜肉大馄饨">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/12/05/交换两个-Integer/" itemprop="url">交换两个 Integer</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-05T19:19:22+08:00">
+                2018-12-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="题目："><a href="#题目：" class="headerlink" title="题目："></a>题目：</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="built_in">String</span>[] args) &#123;</span><br><span class="line">    Integer a = <span class="number">1</span>;</span><br><span class="line">    Integer b = <span class="number">2</span>;</span><br><span class="line">    System.out.println(<span class="string">"before swap: a="</span> + a + <span class="string">", b="</span> + b);</span><br><span class="line">    <span class="comment">// 交换 a 和 b 的值</span></span><br><span class="line">    swap(a, b);</span><br><span class="line">    System.out.println(<span class="string">"after swap: a="</span> + a + <span class="string">", b="</span> + b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>思考：如何实现 <code>swap(Integer a, Integer b)</code> 函数？</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="一、思考"><a href="#一、思考" class="headerlink" title="一、思考"></a>一、思考</h3><h4 id="1-Integer-是引用类型，那么直接将-Integer-作为-swap-Integer-a-Integer-b-参数"><a href="#1-Integer-是引用类型，那么直接将-Integer-作为-swap-Integer-a-Integer-b-参数" class="headerlink" title="1.Integer 是引用类型，那么直接将 Integer 作为 swap(Integer a, Integer b) 参数?"></a>1.Integer 是引用类型，那么直接将 Integer 作为 <code>swap(Integer a, Integer b)</code> 参数?</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">private <span class="keyword">static</span> <span class="keyword">void</span> swap(Integer a, Integer b) &#123;</span><br><span class="line">    Integer temp = a;</span><br><span class="line">    a = b;</span><br><span class="line">    b = temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>运行前：a = 1，b = 2<br>运行后：a = 1，b = 2</p>
+</blockquote>
+<p>为什么？？？<br>| 对象 | 修饰 | 含义 |<br>|-|-|-|<br>| 类 Integer | final class Integer | Integer 不可变 |<br>| 成员变量 value | private final value | value 私有不可变 |<br>Integer 虽然是引用类型，但是无法通过引用来修改 Integer 的 value 值</p>
+<p>查看 Integer 类的定义：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 类被 final 修饰，即不能被继承</span></span><br><span class="line">public final <span class="class"><span class="keyword">class</span> <span class="title">Integer</span> <span class="keyword">extends</span> <span class="title">Number</span> <span class="title">implements</span> <span class="title">Comparable</span>&lt;<span class="title">Integer</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">	</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * The value of the &#123;@code Integer&#125;.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * @serial</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="comment">// 成员变量被 private/final 修饰，即不可见/不可变</span></span><br><span class="line">    <span class="comment">// 没有提供 setter 等方法修改成员变量</span></span><br><span class="line">    private final int value;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Constructs a newly allocated &#123;@code Integer&#125; object that</span></span><br><span class="line"><span class="comment">     * represents the specified &#123;@code int&#125; value.</span></span><br><span class="line"><span class="comment">     * 构造一个新分配的 Integer 对象，该对象表示指定的 value 值</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * @param   value   the value to be represented by the</span></span><br><span class="line"><span class="comment">     *                  &#123;@code Integer&#125; object.</span></span><br><span class="line"><span class="comment">     * 由整数对象表示的值</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    public Integer(int value) &#123;</span><br><span class="line">        <span class="keyword">this</span>.value = value;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    ...</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Integer 对象一旦创建就不可变，所以当 Integer 作为参数传递时，虽然传递的是引用，但是在 swap() 函数中对该引用的操作并不能影响到 main() 函数中的 Integer 对象，swap(Integer a, Integer b) 中对引用的操作其实是先创建了新的 Integer 对象，然后修改的是新的 Integer 对象的 value 值，和 main() 函数中的 Integer 对象无关</p>
+<h4 id="2-Integer-的-value-私有不可变，使用反射？"><a href="#2-Integer-的-value-私有不可变，使用反射？" class="headerlink" title="2.Integer 的 value 私有不可变，使用反射？"></a>2.Integer 的 value 私有不可变，使用反射？</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">private <span class="keyword">static</span> <span class="keyword">void</span> swap(Integer a, Integer b) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        int temp = a;</span><br><span class="line">        Field field = Integer.class.getDeclaredField(<span class="string">"value"</span>);</span><br><span class="line">        <span class="comment">// 设置私有属性访问权限为 true</span></span><br><span class="line">        field.setAccessible(<span class="literal">true</span>);</span><br><span class="line">        field.set(a, b);</span><br><span class="line">        field.set(b, temp);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>运行前：a = 1，b = 2<br>运行后：a = 2，b = 2</p>
+</blockquote>
+<p>为什么？？？<br>Integer 类中有一个缓存数组 <code>IntegerCache</code>，数组范围是 [-128, 127]，在此范围内的值，不通过 new 方式获取对象，直接从缓存数组中拿<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Returns an &#123;@code Integer&#125; instance representing the specified</span></span><br><span class="line"><span class="comment"> * &#123;@code int&#125; value.</span></span><br><span class="line"><span class="comment"> * 返回表示指定 int value 值的 Integer 实例</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * If a new &#123;@code Integer&#125; instance is not</span></span><br><span class="line"><span class="comment"> * required, this method should generally be used in preference to</span></span><br><span class="line"><span class="comment"> * the constructor &#123;@link #Integer(int)&#125;, as this method is likely</span></span><br><span class="line"><span class="comment"> * to yield significantly better space and time performance by</span></span><br><span class="line"><span class="comment"> * caching frequently requested values.</span></span><br><span class="line"><span class="comment"> * 如果不需要一个新的整数实例，则该方法一般应优先于构造函数整数，因为这种方法通过缓存频繁请求的值可能产生明显更好的空间和时间性能</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * This method will always cache values in the range -128 to 127,</span></span><br><span class="line"><span class="comment"> * inclusive, and may cache other values outside of this range.</span></span><br><span class="line"><span class="comment"> * 此方法将始终在范围 -128 至 127 的范围内缓存值，并且可以缓存在此范围之外的其他值（缓存数组 IntegerCache 的最大值 high 是可以修改的，修改 sun.misc.VM.getSavedProperty 属性值）</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">public <span class="keyword">static</span> Integer valueOf(int i) &#123;</span><br><span class="line">    <span class="comment">// 在缓存数组 IntegerCache 范围 -128 至 127 内的值</span></span><br><span class="line">    <span class="keyword">if</span> (i &gt;= IntegerCache.low &amp;&amp; i &lt;= IntegerCache.high)</span><br><span class="line">        <span class="comment">// 直接从缓存数组中获取对应值</span></span><br><span class="line">        <span class="keyword">return</span> IntegerCache.cache[i + (-IntegerCache.low)];</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Integer(i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>因为 a = 1，b = 2，都在缓存数组 IntegerCache 范围 [-128, 127] 内，所以<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// temp = a = 1，对应 IntegerCache 下标 130</span></span><br><span class="line">int temp = a;</span><br><span class="line">Field field = Integer.class.getDeclaredField(<span class="string">"value"</span>);</span><br><span class="line">field.setAccessible(<span class="literal">true</span>);</span><br><span class="line"><span class="comment">// 修改 IntegerCache 下标 130 的值为 b，此时 a = 2，temp = 2</span></span><br><span class="line">field.set(a, b);</span><br><span class="line"><span class="comment">// 修改 IntegerCache 下标 131 的值为 temp，b = 2</span></span><br><span class="line">field.set(b, temp);</span><br></pre></td></tr></table></figure></p>
+<p>那该怎么办咧？<br>答：不去拿缓存数组 IntegerCache 中的值<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 修改 b 的值时，手动 new Integer(temp)</span></span><br><span class="line">field.set(b, <span class="keyword">new</span> Integer(temp));</span><br></pre></td></tr></table></figure></p>
+<p>或<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">field.setInt(b, temp);</span><br></pre></td></tr></table></figure></p>
+<h3 id="二、总结"><a href="#二、总结" class="headerlink" title="二、总结"></a>二、总结</h3><p>1.Integer 是不可变类，对 Integer 引用进行操作后，得到的值是新创建的 Integer 对象<br>2.通过反射可以修改不可变对象的值</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://jinghuihai.github.io/2018/12/04/简述类加载机制/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -672,7 +809,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
